@@ -16,6 +16,57 @@ function checkUsername() {
   }
 }
 
+function checkEmail() {
+  let failTextField = document.querySelector(".email-container .fail-text");
+  let textLabel = document.querySelector(".email-input");
+  let text = textLabel.value;
+  const re =
+    /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+  if (!text.match(re)) {
+    failTextField.innerHTML = "Email is not valid";
+    failLabel(textLabel);
+  } else {
+    failTextField.innerHTML = "";
+    successLabel(textLabel);
+  }
+}
+
+function checkPassword() {
+  let failTextField = document.querySelector(".password-container .fail-text");
+  let textLabel = document.querySelector(".password-input");
+  let text = textLabel.value;
+
+  if (text.length < 8) {
+    failTextField.innerHTML = "Password must be at least 8 characters";
+    failLabel(textLabel);
+  } else {
+    failTextField.innerHTML = "";
+    successLabel(textLabel);
+  }
+}
+
+function checkSecondPassword() {
+  let failTextField = document.querySelector(
+    ".password-confirm-container .fail-text"
+  );
+  let textLabel = document.querySelector(".password-confirm-input");
+  let text = textLabel.value;
+
+  let textLabelPassword = document.querySelector(".password-input");
+  let textPassword = textLabelPassword.value;
+
+  if (text != textPassword) {
+    failTextField.innerHTML = "Passwords do not match";
+    failLabel(textLabel);
+  } else if (text === "") {
+    failTextField.innerHTML = "Password required";
+    failLabel(textLabel);
+  } else {
+    failTextField.innerHTML = "";
+    successLabel(textLabel);
+  }
+}
+
 function failLabel(textLabel) {
   textLabel.classList.remove("fail-label");
   textLabel.classList.remove("success-label");
@@ -31,4 +82,7 @@ function successLabel(textLabel) {
 let button = document.querySelector(".button");
 button.addEventListener("click", () => {
   checkUsername();
+  checkEmail();
+  checkPassword();
+  checkSecondPassword();
 });
